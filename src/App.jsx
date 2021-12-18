@@ -151,21 +151,41 @@ const App = () => {
   return (
     <div className="mainContainer">
       <div className="dataContainer">
-        <div className="header">
-        👋 Hello!
-        </div>
+      <nav className="navbar">
+                <div className="container-fluid justify-content-start">
+                  <img src="https://ipfs.io/ipfs/QmNmKppas2P5DeqhUqu3F5Ro64va1CfKvQjEqHZF9hHiiC" height="32" width="32" />
+                  <a className="navbar-brand justify-content-start">WavePortal</a>
+                </div>
+
+                  {!currentAccount && (
+                   <div className="d-flex ">
+                     <button type="button" className="walletConnectButton" onClick={connectWallet}>
+                        <strong className="fs-15">Connect</strong>
+                     </button>
+                   </div>
+                    )}
+                    
+                    {currentAccount && (
+                      <div className="d-flex align-center justify-center">
+                        <button type="button" className="walletConnectButton">
+                            <strong className="fs-6">Connected</strong>
+                      </button>
+                    </div>
+                    )}
+
+                    
+              </nav>
+      <br />
 
         <div className="bio">
+        <div className="messageFeedHeader"> About </div>
           My name is Darragh, I have a bachelors degree in softwave development from Munster institute of Technology (formerly Cork Institute of Technology). Now I am learning all I can about the blockchain and web3 world!
         </div>
 
         <div className="totalWaves">
           Total Waves: {waveCount}
         </div>
-
-        <button className="waveButton" onClick={wave}>
-          Wave at Me
-        </button>
+  
 
         {
           currentAccount ? (<textarea name="messageArea"
@@ -175,24 +195,25 @@ const App = () => {
             value={messageValue}
             onChange={e => setMessageValue(e.target.value)} />) : null
         }
-        
-        {/*
-        * If there is no currentAccount render this button
-        */}
-        {!currentAccount && (
-          <button className="waveButton" onClick={connectWallet}>
-            Connect Wallet
-          </button>
-        )}
 
+        <button className="messageButton" onClick={wave}>
+          Post a message!
+        </button>
+
+        <div className="messageHistory">
+        <div className="messageFeedHeader"> Message Feed </div>
          {allWaves.map((wave, index) => {
           return (
-            <div key={index} style={{ backgroundColor: "OldLace", marginTop: "16px", padding: "8px" }}>
-              <div>Address: {wave.address}</div>
-              <div>Time: {wave.timestamp.toString()}</div>
-              <div>Message: {wave.message}</div>
+            <div key={index} className="individualMessage">
+              <div> <b>Address:</b> {wave.address}</div>
+              <div> <b> Message: </b> {wave.message}</div>
+              <div> <b> Time: </b> {wave.timestamp.toString()}</div>
             </div>)
         })}
+        </div>
+
+
+      
       </div>
     </div>
   );
